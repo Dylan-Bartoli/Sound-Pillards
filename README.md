@@ -1,2 +1,4 @@
-# ThreeJs-vue-0
-This is a web app developed in Vue.js and Three.js following the course of Marius Ballot.
+# Sound Pillards - Vue.js - Three.js
+This is a web app developed in Vue.js with Three.js following the course of Marius Ballot.
+
+See live preview on https://sound-pillards-dylan.netlify.app/
