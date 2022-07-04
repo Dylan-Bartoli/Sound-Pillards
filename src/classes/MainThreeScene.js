@@ -10,9 +10,10 @@ import MyGUI from '../utils/MyGUI'
 import SpherePillards from './SpherePillardsClass'
 // import floor
 import Floor from './FloorClass'
-
-import simpleFrag from '../shaders/simple.frag'
-import simpleVert from '../shaders/simple.vert'
+// import Spectrum
+import Spectrum from './SpectrumClass'
+// import parlicles 
+import ParticlesSystem from './ParticlesSystem'
 
 class MainThreeScene {
   constructor() {
@@ -40,7 +41,7 @@ class MainThreeScene {
       0.1,
       1000
     )
-    this.camera.position.set(0, 0, 5)
+    this.camera.position.set(0, 0, 10)
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
     this.controls.enabled = config.controls
     this.controls.maxDistance = 1500
@@ -50,6 +51,9 @@ class MainThreeScene {
     SpherePillards.init(this.scene)
     // add floor to the scene
     Floor.init(this.scene)
+    // add spectrum to the scene
+    Spectrum.init(this.scene)
+    ParticlesSystem.init(this.scene)
 
     MyGUI.hide()
     if (config.myGui) MyGUI.show()
@@ -63,6 +67,8 @@ class MainThreeScene {
     this.renderer.render(this.scene, this.camera)
     
     SpherePillards.update()
+    Spectrum.update()
+    ParticlesSystem.update()
   }
 
   resizeCanvas() {

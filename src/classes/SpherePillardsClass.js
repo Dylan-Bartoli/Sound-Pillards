@@ -1,6 +1,8 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
+import SoundReactor from './SoundReactor'
+
 class SpherePillardsClass {
   constructor() {
     this.bind()
@@ -28,7 +30,6 @@ class SpherePillardsClass {
     })
     // load the blender model
     this.modelLoader.load('./assets/models/pillard.glb', (glb) => {
-      console.log(glb)
       // pass al children of this scene instace
       glb.scene.traverse((child) => {
         // if one child is an instace of a THREE mesh then add a mesh normal material to it
@@ -104,13 +105,21 @@ class SpherePillardsClass {
   }
 
   update() {
-    let i = 0
-    while (i < this.pillards.children.length) {
-      this.pillards.children[i].children[0].position.y =
-        (Math.sin(Date.now() * 0.005 + this.pillards.children[i].position.x) +
-          1) *
-        0.75
-      i++
+    if (SoundReactor.playFlag) {
+      let i = 0
+      while (i < this.pillards.children.length) {
+        this.pillards.children[i].children[0].position.y = SoundReactor.fdata[i] / 255 * 2
+        i++
+      }
+    } else {
+      let i = 0
+      while (i < this.pillards.children.length) {
+        this.pillards.children[i].children[0].position.y =
+          (Math.sin(Date.now() * 0.005 + this.pillards.children[i].position.x) +
+            1) *
+          0.75
+        i++
+      }
     }
   }
 

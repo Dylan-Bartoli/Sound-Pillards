@@ -8,18 +8,20 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
+    "core-js": "^3.23.3",
+    "glsl-noise": "^0.0.0",
     "glslify": "^7.1.1",
     "glslify-loader": "^2.0.0",
     "raw-loader": "^4.0.2",
-    "three": "^0.127.0",
-    "vue": "^3.0.0"
+    "three": "^0.142.0",
+    "vue": "^3.2.37"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
-    "stylus": "^0.54.7",
-    "stylus-loader": "^3.0.2"
+    "@vue/cli-plugin-babel": "~5.0.6",
+    "@vue/cli-service": "~5.0.6",
+    "@vue/compiler-sfc": "^3.2.37",
+    "dat.gui": "^0.7.9",
+    "stylus": "^0.58.1",
+    "stylus-loader": "^7.0.0"
   }
 }
