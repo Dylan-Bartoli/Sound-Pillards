@@ -4,7 +4,7 @@ class ParticleSystem {
   constructor() {
     this.bind()
     this.particleCount = 3000
-    this.boxSize = 30
+    this.boxSize = 25
   }
 
   init(scene) {
@@ -27,7 +27,7 @@ class ParticleSystem {
     )
 
     this.particleMaterial = new THREE.PointsMaterial({
-      color: 0xffffff,
+      color: 'hsl(74, 100%, 85%)',
       size: 0.02,
     })
 
@@ -35,7 +35,6 @@ class ParticleSystem {
       this.particlesGeom,
       this.particleMaterial
     )
-    console.log(this.particlesGeom.attributes.position.array)
     this.scene.add(this.particleSystem)
   }
 
@@ -44,7 +43,10 @@ class ParticleSystem {
     while (i < this.particleCount) {
       this.particlesGeom.attributes.position.array[i * 3 + 0] += 0.01
       this.particlesGeom.attributes.position.array[i * 3 + 1] += 0.01
-      this.particlesGeom.attributes.position.array[i * 3 + 2] += 0.01
+      // this.particlesGeom.attributes.position.array[i * 3 + 2] += 0.01
+      if(this.particlesGeom.attributes.position.array[i * 3 + 1] > this.boxSize / 2 ) {
+        this.particlesGeom.attributes.position.array[i * 3 + 1] = - this.boxSize / 2 
+      }
       if(this.particlesGeom.attributes.position.array[i * 3 + 0] > this.boxSize / 2 ) {
         this.particlesGeom.attributes.position.array[i * 3 + 0] = - this.boxSize / 2 
       }

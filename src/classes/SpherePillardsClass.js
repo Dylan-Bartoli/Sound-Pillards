@@ -3,13 +3,24 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
 import SoundReactor from './SoundReactor'
 
+import MyGUI from '../utils/MyGUI'
+
+import LoadingController from './LoadingController'
+
 class SpherePillardsClass {
   constructor() {
     this.bind()
     // create loader on costruct
-    this.modelLoader = new GLTFLoader()
+    this.modelLoader = new GLTFLoader(LoadingController)
     // material loader
-    this.textureLoader = new THREE.TextureLoader()
+    this.textureLoader = new THREE.TextureLoader(LoadingController)
+
+    // change params
+    this.params = {
+      waveSpeed : 1,
+      subdivNum : 3,
+      pillardSize : .2
+    }
   }
 
   init(scene) {
@@ -41,14 +52,35 @@ class SpherePillardsClass {
       // call position
       this.computePositions()
     })
+
+    const sphereFolder = MyGUI.addFolder('Sphere Pillards')
+    sphereFolder.open()
+    sphereFolder.add(this.params, 'waveSpeed', 0.001, 3).name('Wave Speed')
+    sphereFolder.add(this.params, 'subdivNum', 1, 10).step(1).name('Ico Subdivisions').onChange(this.computePositions)
+    sphereFolder.add(this.params, 'pillardSize', 0.01, 1).name('Pillard Size').onChange(this.computePositions)
   }
 
   computePositions() {
+
+    let ico
+
+    this.scene.traverse(child => {
+      if(child.name === 'ico') {
+        ico = child
+      }
+    })
+
+    if (ico)
+      this.scene.remove(ico)
+
     // create a ico sphere 2 --> dim and 4 --> is subsections
-    const sphereGeometry = new THREE.IcosahedronGeometry(2, 3)
+    const sphereGeometry = new THREE.IcosahedronGeometry(2, this.params.subdivNum)
     const sphereMat = this.gMatCap
     const sphere = new THREE.Mesh(sphereGeometry, sphereMat)
+    sphere.name = 'ico'
     this.scene.add(sphere)
+
+    this.pillards.clear()
 
     // create and array for storing each vertex coordinates
     let vertexArray = []
@@ -96,7 +128,7 @@ class SpherePillardsClass {
           vertexArray[i].z
         )
         c.position.copy(posVec)
-        c.scale.multiplyScalar(0.2)
+        c.scale.multiplyScalar(this.params.pillardSize)
         c.quaternion.setFromUnitVectors(this.upVec, posVec.normalize())
         this.pillards.add(c)
       }
@@ -115,7 +147,7 @@ class SpherePillardsClass {
       let i = 0
       while (i < this.pillards.children.length) {
         this.pillards.children[i].children[0].position.y =
-          (Math.sin(Date.now() * 0.005 + this.pillards.children[i].position.x) +
+          (Math.sin(Date.now() * 0.005 * this.params.waveSpeed + this.pillards.children[i].position.x) +
             1) *
           0.75
         i++
@@ -123,7 +155,9 @@ class SpherePillardsClass {
     }
   }
 
-  bind() {}
+  bind() {
+    this.computePositions = this.computePositions.bind(this)
+  }
 }
 
 const _instance = new SpherePillardsClass()

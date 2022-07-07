@@ -1,7 +1,7 @@
 <template>
   <div class="audioButton">
-    <button v-if="!playFlag" @click="onPlay()">Play</button>
-    <button v-if="playFlag" @click="onPause()">Pause</button>
+    <button v-if="!playFlag" @click="onPlay()">PLAY</button>
+    <button v-if="playFlag" @click="onPause()">PAUSE</button>
   </div>
 </template>
 
@@ -38,14 +38,28 @@ export default {
 <style scoped lang="stylus">
 .audioButton {
     position : absolute;
-    top : 0;
-    left : 0;
+    bottom : 100px;
+    right : 50px;
 
     button {
-        background : red;
-        padding : 20px;
+        padding : 15px 30px;
+
+        border : 1px solid hsl(74, 100%, 85%);
+        border-radius : 25px;
+
+        background-color : transparent;
+        color : hsl(74, 100%, 85%);
+
+        line-height : 1;
         width : 100px;
         height : 50px;
+
+        transition : all .25s;
+
+        &:hover {
+          background-color : hsl(74, 100%, 85%);
+          color : black;
+        }
     }
 }
 </style>

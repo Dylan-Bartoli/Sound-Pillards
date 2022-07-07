@@ -11,6 +11,8 @@ uniform sampler2D uMatCap;
 uniform float uSpecterSize;
 // get wave border size
 uniform float uWaveBorder;
+// get wave speed
+uniform float uWaveSpeed;
 // get border colour 
 uniform vec3 uBorderColor;
 // get uTime to animate the position
@@ -21,7 +23,7 @@ void main() {
     float n3 = snoise3(vec3(vPosition.xz * 2.5, uTime * 0.01)) * .5;
 
     // create a wave effect by using sin function w/ y position of the elem 
-    float w = sin(vPosition.y * 5. - uTime * 0.1);
+    float w = sin(vPosition.y * 5. - uTime * uWaveSpeed);
 
     float borderMask = step(w, n3 - (uSpecterSize + .1));
     // set border width

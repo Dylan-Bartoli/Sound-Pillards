@@ -1,12 +1,13 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
+import LoadingController from './LoadingController'
 
 class FloorClass {
     constructor() {
         this.bind()
         // create loader on costruct
-        this.modelLoader = new GLTFLoader()
+        this.modelLoader = new GLTFLoader(LoadingController)
     }
 
     init(scene) {
@@ -19,7 +20,8 @@ class FloorClass {
                 if (child instanceof THREE.Mesh)
                     this.floor = child
             })
-            this.floor.translateY(-3)
+            this.floor.translateY(-5)
+            this.floor.scale.multiplyScalar(2)
             this.scene.add(this.floor)
         })
     }
