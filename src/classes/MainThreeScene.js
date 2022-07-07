@@ -37,7 +37,7 @@ class MainThreeScene {
 
     //MAIN SCENE INSTANCE
     const color = new THREE.Color(0x151515)
-    const fog = new THREE.Fog(color, 20, 30)
+    const fog = new THREE.Fog(color, 10, 20)
     this.scene = new THREE.Scene()
     this.scene.fog = fog
     this.scene.background = color
